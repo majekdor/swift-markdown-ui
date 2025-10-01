@@ -9,6 +9,7 @@ enum InlineNode: Hashable, Sendable {
   case emphasis(children: [InlineNode])
   case strong(children: [InlineNode])
   case strikethrough(children: [InlineNode])
+  case underline(children: [InlineNode])
   case link(destination: String, children: [InlineNode])
   case image(source: String, children: [InlineNode])
 }
@@ -22,6 +23,8 @@ extension InlineNode {
       case .strong(let children):
         return children
       case .strikethrough(let children):
+        return children
+      case .underline(let children):
         return children
       case .link(_, let children):
         return children
@@ -40,6 +43,8 @@ extension InlineNode {
         self = .strong(children: newValue)
       case .strikethrough:
         self = .strikethrough(children: newValue)
+      case .underline:
+        self = .underline(children: newValue)
       case .link(let destination, _):
         self = .link(destination: destination, children: newValue)
       case .image(let source, _):

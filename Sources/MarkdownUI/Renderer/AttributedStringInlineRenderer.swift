@@ -57,6 +57,8 @@ private struct AttributedStringInlineRenderer {
       self.renderStrong(children: children)
     case .strikethrough(let children):
       self.renderStrikethrough(children: children)
+    case .underline(let children):
+      self.renderUnderline(children: children)
     case .link(let destination, let children):
       self.renderLink(destination: destination, children: children)
     case .image(let source, let children):
@@ -136,6 +138,17 @@ private struct AttributedStringInlineRenderer {
       self.render(child)
     }
 
+    self.attributes = savedAttributes
+  }
+    
+  private mutating func renderUnderline(children: [InlineNode]) {
+    let savedAttributes = self.attributes
+    self.attributes = self.textStyles.underline.mergingAttributes(self.attributes)
+      
+    for child in children {
+      self.render(child)
+    }
+      
     self.attributes = savedAttributes
   }
 

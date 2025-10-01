@@ -408,6 +408,15 @@ extension UnsafeNode {
       }
       children.compactMap(UnsafeNode.make).forEach { cmark_node_append_child(node, $0) }
       return node
+    case .underline(let children):
+      guard let underline = cmark_find_syntax_extension("underline"),
+        let node = cmark_node_new_with_ext(
+          ExtensionNodeTypes.shared.CMARK_NODE_UNDERLINE, underline)
+      else {
+        return nil
+      }
+      children.compactMap(UnsafeNode.make).forEach { cmark_node_append_child(node, $0) }
+      return node
     case .link(let destination, let children):
       guard let node = cmark_node_new(CMARK_NODE_LINK) else { return nil }
       cmark_node_set_url(node, destination)
@@ -450,6 +459,7 @@ private enum NodeType: String {
   // Extensions
 
   case strikethrough
+  case underline
   case table
   case tableHead = "table_header"
   case tableRow = "table_row"
@@ -490,6 +500,7 @@ private struct ExtensionNodeTypes {
   let CMARK_NODE_TABLE_ROW: cmark_node_type
   let CMARK_NODE_TABLE_CELL: cmark_node_type
   let CMARK_NODE_STRIKETHROUGH: cmark_node_type
+  let CMARK_NODE_UNDERLINE: cmark_node_type
 
   static let shared = ExtensionNodeTypes()
 
@@ -509,6 +520,8 @@ private struct ExtensionNodeTypes {
       findNodeType("CMARK_NODE_TABLE_CELL", in: handle) ?? CMARK_NODE_NONE
     self.CMARK_NODE_STRIKETHROUGH =
       findNodeType("CMARK_NODE_STRIKETHROUGH", in: handle) ?? CMARK_NODE_NONE
+    self.CMARK_NODE_UNDERLINE =
+        findNodeType("CMARK_NODE_UNDERLINE", in: handle) ?? CMARK_NODE_NONE
 
     dlclose(handle)
   }
