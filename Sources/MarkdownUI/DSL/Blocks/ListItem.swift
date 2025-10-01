@@ -26,7 +26,7 @@ import Foundation
 public struct ListItem: Hashable {
   let children: [BlockNode]
 
-  init(children: [BlockNode]) {
+  public init(children: [BlockNode]) {
     self.children = children
   }
 
