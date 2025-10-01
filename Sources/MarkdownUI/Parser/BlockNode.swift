@@ -45,8 +45,17 @@ public struct RawListItem: Hashable {
 }
 
 public struct RawTaskListItem: Hashable {
-  let isCompleted: Bool
-  let children: [BlockNode]
+    
+  public let isCompleted: Bool
+  public let children: [BlockNode]
+    
+  public init(
+    isCompleted: Bool,
+    children: [BlockNode]
+  ) {
+    self.isCompleted = isCompleted
+    self.children = children
+  }
 }
 
 public enum RawTableColumnAlignment: Character {
@@ -57,9 +66,19 @@ public enum RawTableColumnAlignment: Character {
 }
 
 public struct RawTableRow: Hashable {
-  let cells: [RawTableCell]
+    
+  public let cells: [RawTableCell]
+    
+  public init(cells: [RawTableCell]) {
+    self.cells = cells
+  }
 }
 
 public struct RawTableCell: Hashable {
-  let content: [InlineNode]
+    
+  public let content: [InlineNode]
+    
+  public init(content: [InlineNode]) {
+    self.content = content
+  }
 }
