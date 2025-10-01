@@ -36,7 +36,12 @@ public extension BlockNode {
 }
 
 public struct RawListItem: Hashable {
+    
   let children: [BlockNode]
+    
+  public init(children: [BlockNode]) {
+    self.children = children
+  }
 }
 
 public struct RawTaskListItem: Hashable {
